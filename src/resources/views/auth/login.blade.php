@@ -5,29 +5,48 @@
 @endsection
 
 @section('content')
-<div class="login__form">
-    <h2 class="login-form__heading content__heading">Login</h2>
-    <div class="login-form__inner">
-        <form class="login-form__form" action="/login" method="post">
-            @csrf
-            <div class="login-form__group">
-                <input class="login-form__input" type="mail" name="email" placeholder="メールアドレス">
-                <p class="register-form__error-message">
+<div class="login__content">
+    <div class="login-form__heading">
+        <h2>ログイン</h2>
+    </div>
+    <form class="form" action="/login" method="post">
+        @csrf
+        <div class="form__group">
+            <div class="form__group-title">
+                <span class="form__label--item">メールアドレス</span>
+            </div>
+            <div class="form__group-content">
+                <div class="form__input--text">
+                    <input type="email" name="email" value="{{ old('email') }}" />
+                </div>
+                <div class="form__error">
                     @error('email')
                     {{ $message }}
                     @enderror
-                </p>
+                </div>
             </div>
-            <div class="login-form_group">
-                <input class="login-form__input" type="password" name="password" placeholder="パスワード">
-                <p>
+        </div>
+        <div class="form__group">
+            <div class="form__group-title">
+                <span class="form__label--item">パスワード</span>
+            </div>
+            <div class="form__group-content">
+                <div class="form__input--text">
+                    <input type="password" name="password" />
+                </div>
+                <div class="form__error">
                     @error('password')
                     {{ $message }}
                     @enderror
-                </p>
+                </div>
             </div>
-            <input class="login-form_btn btn" type="submit" value="ログイン">
-        </form>
+        </div>
+        <div class="form__button">
+            <button class="form__button-submit" type="submit">ログイン</button>
+        </div>
+    </form>
+    <div class="register__link">
+        <a class="register__button-submit" href="/register">会員登録の方はこちら</a>
     </div>
 </div>
 @endsection
