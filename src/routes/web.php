@@ -3,4 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 
-Route::get('/', [AttendanceController::class, 'getStamp']);
+Route::middleware('auth')->group(function () {
+    Route::get('/', [AttendanceController::class, 'getStamp']);
+});
