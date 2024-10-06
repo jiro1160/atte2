@@ -9,7 +9,12 @@ class Work extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-        'id',
+    protected $fillable = [
+        'user_id', 'work_date', 'start_time', 'end_time'
     ];
+
+    public function user()
+    {
+        $this->belongsTo(User::class);
+    }
 }
