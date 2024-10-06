@@ -17,42 +17,12 @@ class AttendanceController extends Controller
 
     public function startWork()
     {
-        $user = Auth::user();
-
-        $oldWork = Work::where('users_id', $user->id)->latest()->first();
-        if ($oldWork) {
-            $oldWorkStartTime = new Carbon($oldWork->startTime);
-            $oldWorkDate = $oldWorkStartTime->startOfDay();
-        }
-
-        $newWorkDate = Carbon::today();
-
-        if (($oldWorkDate == $newWorkDate) && (empty($oldWork->startTime))) {
-            return redirect()->back();
-        }
-
-        $work = Work::create([
-            'users_id' => $user->id,
-            'start_time' => Carbon::now(),
-        ]);
-
-        return redirect()->back();
+        $userId = Auth::user()->id;
+        $year_and_day = Carbon::now()->format('Y-d');
+        $current_time = Carbon::now()->format('H:i:s');
     }
 
-    public function endWork()
-    {
-        $user = Auth::user();
-        $work = Work::where('users_id', $user->id)->latest()->first();
-
-        if (!empty($work->endTime)) {
-            return redirect()->back();
-        }
-        $work->update([
-            'endTime' => Carbon::now()
-        ]);
-
-        return redirect()->back();
-    }
+    public function endWork() {}
 
     public function startRest() {}
 
