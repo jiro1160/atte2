@@ -47,25 +47,25 @@
     </script>
     <form class="timestamp__form" action="/work/start" method="post">
         @csrf
-        <button class="timestamp__form-button" id="workStartButton">
+        <button class="timestamp__form-button" id="workStartButton" onclick="workStart()">
             勤務開始
         </button>
     </form>
     <form class="timestamp__form" action="/work/end" method="post">
         @csrf
-        <button class="timestamp__form-button" id="workEndButton">
+        <button class="timestamp__form-button" id="workEndButton" onclick="workEnd()">
             勤務終了
         </button>
     </form>
     <form class="timestamp___form" action="/rest/start" method="post">
         @csrf
-        <button class="timestamp__form-button" id="restStartButton">
+        <button class="timestamp__form-button" id="restStartButton" onclick="restStart()">
             休憩開始
         </button>
     </form>
     <form class="timestamp__form" action="/rest/end" method="post">
         @csrf
-        <button class="timestamp__form-button" id="restEndButton">
+        <button class="timestamp__form-button" id="restEndButton" onclick="restEnd()">
             休憩終了
         </button>
     </form>

@@ -10,7 +10,7 @@ class Work extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'work_date', 'start_time', 'end_time'
+        'users_id', 'work_date', 'start_time', 'end_time'
     ];
 
     public function user()

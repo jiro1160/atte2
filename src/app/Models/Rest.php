@@ -9,7 +9,12 @@ class Rest extends Model
 {
     use HasFactory;
 
-    protected $guarded = [
-        'id',
+    protected $fillable = [
+        'works_id', 'start_time', 'end_time'
     ];
+
+    public function work()
+    {
+        return $this->belongsTo(Work::class, 'works_id');
+    }
 }

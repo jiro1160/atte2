@@ -7,4 +7,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [AttendanceController::class, 'getStamp']);
     Route::post('/work/start', [AttendanceController::class, 'startWork']);
     Route::post('/work/end', [AttendanceController::class, 'endWork']);
+    Route::post('/rest/start', [AttendanceController::class, 'startRest']);
+    Route::post('/rest/end', [AttendanceController::class, 'endRest']);
 });
