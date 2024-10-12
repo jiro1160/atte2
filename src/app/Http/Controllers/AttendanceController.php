@@ -16,7 +16,6 @@ class AttendanceController extends Controller
 
     public function startWork(Request $request)
     {
-        $request->all();
         $userId = auth()->id();
         $workDate = Carbon::now()->format('Y-m-d');
         $startTime = Carbon::now()->format('H:i:s');
@@ -31,7 +30,7 @@ class AttendanceController extends Controller
             $work->save();
         }
 
-        return redirect('/attendance');
+        return redirect('/');
     }
 
     public function endWork(Request $request)
@@ -45,9 +44,9 @@ class AttendanceController extends Controller
         if ($work) {
             $work->end_time = $endTime;
             $work->save();
-
-            return redirect('/attendance');
         }
+
+        return redirect('/');
     }
 
     public function startRest(Request $request)
@@ -63,9 +62,9 @@ class AttendanceController extends Controller
             $rest->works_id = $work->id;
             $rest->start_time = $startTime;
             $rest->save();
-
-            return redirect('/attendance');
         }
+
+        return redirect('/');
     }
 
     public function endRest(Request $request)
@@ -82,9 +81,14 @@ class AttendanceController extends Controller
             if ($rest) {
                 $rest->end_time = $endTime;
                 $rest->save();
-
-                return redirect('/attendance');
             }
         }
+
+        return redirect('/');
+    }
+
+    public function getAttendance()
+    {
+        return view('attendance');
     }
 }
