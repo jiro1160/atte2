@@ -11,16 +11,40 @@ class AttendanceController extends Controller
 {
     public function getStamp()
     {
-        return view('stamp');
+        $userId = auth()->id();
+
+        $work = Work::where('users_id', $userId)
+            ->whereDate('created_at', now()->format('Y-m-d'))
+            ->first();
+
+        if (!$work) {
+            $status = 0;
+        } elseif ($work->end_time) {
+            $status = 3;
+        } else {
+            $rest = Rest::where('works_id', $work->id)
+                ->whereNull('end_time')
+                ->first();
+
+            if ($rest) {
+                $status = 2;
+            } else {
+                $status = 1;
+            }
+        }
+
+        return view('stamp')->with('status', $status);
     }
 
-    public function startWork(Request $request)
+    public function startWork()
     {
         $userId = auth()->id();
         $workDate = Carbon::now()->format('Y-m-d');
         $startTime = Carbon::now()->format('H:i:s');
 
-        $existingWork = Work::where('users_id', $userId)->where('work_date', $workDate)->first();
+        $existingWork = Work::where('users_id', $userId)
+            ->where('work_date', $workDate)
+            ->first();
 
         if (!$existingWork) {
             $work = new Work();
@@ -33,13 +57,15 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function endWork(Request $request)
+    public function endWork()
     {
         $userId = auth()->id();
         $workDate = Carbon::now()->format('Y-m-d');
         $endTime = Carbon::now()->format('H:i:s');
 
-        $work = Work::where('users_id', $userId)->where('work_date', $workDate)->first();
+        $work = Work::where('users_id', $userId)
+            ->where('work_date', $workDate)
+            ->first();
 
         if ($work) {
             $work->end_time = $endTime;
@@ -49,13 +75,15 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function startRest(Request $request)
+    public function startRest()
     {
         $userId = auth()->id();
         $workDate = Carbon::now()->format('Y-m-d');
         $startTime = Carbon::now()->format('H:i:s');
 
-        $work = Work::where('users_id', $userId)->where('work_date', $workDate)->first();
+        $work = Work::where('users_id', $userId)
+            ->where('work_date', $workDate)
+            ->first();
 
         if ($work) {
             $rest = new Rest();
@@ -67,7 +95,7 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function endRest(Request $request)
+    public function endRest()
     {
         $userId = auth()->id();
         $workDate = Carbon::now()->format('Y-m-d');
@@ -76,7 +104,9 @@ class AttendanceController extends Controller
         $work = Work::where('users_id', $userId)->where('work_date', $workDate)->first();
 
         if ($work) {
-            $rest = Rest::where('works_id', $work->id)->whereNull('end_time')->first();
+            $rest = Rest::where('works_id', $work->id)
+                ->whereNull('end_time')
+                ->first();
 
             if ($rest) {
                 $rest->end_time = $endTime;

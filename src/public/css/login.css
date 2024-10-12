@@ -53,5 +53,8 @@
 .register__link {
     margin-top: 20px;
     text-align: center;
+}
+
+.register__button-submit {
     text-decoration: none;
 }
