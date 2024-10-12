@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Work;
+use App\Models\Rest;
 
 class AttendanceController extends Controller
 {
@@ -15,23 +16,22 @@ class AttendanceController extends Controller
 
     public function startWork(Request $request)
     {
+        $request->all();
         $userId = auth()->id();
-
-        $now = Carbon::now();
-        $workDate = $now->format('Y-m-d');
-        $startTime = $now->format('H:i:s');
+        $workDate = Carbon::now()->format('Y-m-d');
+        $startTime = Carbon::now()->format('H:i:s');
 
         $existingWork = Work::where('users_id', $userId)->where('work_date', $workDate)->first();
 
-        if ($existingWork) {
+        if (!$existingWork) {
             $work = new Work();
             $work->users_id = $userId;
             $work->work_date = $workDate;
             $work->start_time = $startTime;
             $work->save();
-
-            return redirect();
         }
+
+        return redirect('/attendance');
     }
 
     public function endWork(Request $request)
@@ -40,13 +40,13 @@ class AttendanceController extends Controller
         $workDate = Carbon::now()->format('Y-m-d');
         $endTime = Carbon::now()->format('H:i:s');
 
-        $work = Work::where('users_id', $userId)->where('Work_date', $workDate)->first();
+        $work = Work::where('users_id', $userId)->where('work_date', $workDate)->first();
 
         if ($work) {
             $work->end_time = $endTime;
             $work->save();
 
-            return redirect();
+            return redirect('/attendance');
         }
     }
 
@@ -64,7 +64,7 @@ class AttendanceController extends Controller
             $rest->start_time = $startTime;
             $rest->save();
 
-            return redirect();
+            return redirect('/attendance');
         }
     }
 
@@ -80,10 +80,10 @@ class AttendanceController extends Controller
             $rest = Rest::where('works_id', $work->id)->whereNull('end_time')->first();
 
             if ($rest) {
-                $rest->ent_time = $endTime;
+                $rest->end_time = $endTime;
                 $rest->save();
 
-                return redirect();
+                return redirect('/attendance');
             }
         }
     }

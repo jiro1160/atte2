@@ -1,0 +1,28 @@
+.timestamp__heading {
+    text-align: center;
+    font-size: 15px
+}
+
+.button-container{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
+.form {
+}
+
+.form__button {
+    flex: 0 0 calc(30% - 10%);
+}
+
+.form__button-submit {
+    width: 100%;
+    padding: 70px 180px;
+    font-size: 20px;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

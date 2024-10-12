@@ -12,6 +12,7 @@
 
     <script>
         window.onload = function() {
+            // 初期状態でボタンを無効にする
             document.getElementById("workEndButton").disabled = true;
             document.getElementById("restStartButton").disabled = true;
             document.getElementById("restEndButton").disabled = true;
@@ -45,29 +46,33 @@
             document.getElementById("restEndButton").disabled = true;
         }
     </script>
-    <form class="timestamp__form" action="/work/start" method="post">
-        @csrf
-        <button class="timestamp__form-button" id="workStartButton" onclick="workStart()">
-            勤務開始
-        </button>
-    </form>
-    <form class="timestamp__form" action="/work/end" method="post">
-        @csrf
-        <button class="timestamp__form-button" id="workEndButton" onclick="workEnd()">
-            勤務終了
-        </button>
-    </form>
-    <form class="timestamp___form" action="/rest/start" method="post">
-        @csrf
-        <button class="timestamp__form-button" id="restStartButton" onclick="restStart()">
-            休憩開始
-        </button>
-    </form>
-    <form class="timestamp__form" action="/rest/end" method="post">
-        @csrf
-        <button class="timestamp__form-button" id="restEndButton" onclick="restEnd()">
-            休憩終了
-        </button>
-    </form>
+
+    <div class="button-container">
+        <form class="form" action="/work/start" method="post">
+            @csrf
+            <div class="form__button">
+                <button type="submit" class="form__button-submit" id="workStartButton" onclick="workStart()">勤務開始</button>
+            </div>
+        </form>
+        <form class="form" action="/work/end" method="post">
+            @csrf
+            <div class="form__button">
+                <button type="submit" class="form__button-submit" id="workEndButton">勤務終了</button>
+            </div>
+        </form>
+        <form class="form" action="/rest/start" method="post">
+            @csrf
+            <div class="form__button">
+                <button type="submit" class="form__button-submit" id="restStartButton" onclick="restStart()">休憩開始</button>
+            </div>
+        </form>
+        <form class="form" action="/rest/end" method="post">
+            @csrf
+            <div class="form__button">
+                <button type="submit" class="form__button-submit" id="restEndButton" onclick="restEnd()">休憩終了</button>
+            </div>
+        </form>
+    </div>
+
 </div>
 @endsection
