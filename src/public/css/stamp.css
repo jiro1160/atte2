@@ -10,9 +10,6 @@
     gap: 40px;
 }
 
-.form {
-}
-
 .form__button {
     flex: 0 0 calc(30% - 10%);
 }
