@@ -1,0 +1,42 @@
+header {
+    background-color: white;
+}
+
+body {
+    background-color: #f0f0f0;
+}
+
+.attendance-list {
+    width: 80%;
+    margin: 20px auto;
+}
+
+.date-navigation {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.date-navigation h2 {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.pagination {
+    background-color: white;
+    margin-top: 20px;
+    text-align: center;
+}
+
+
+.attendance-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.attendance-table th, .attendance-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    width: 20%;
+}

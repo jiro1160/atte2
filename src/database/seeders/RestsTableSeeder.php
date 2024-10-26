@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Rest;
+use App\Models\Work;
 
 class RestsTableSeeder extends Seeder
 {
@@ -14,11 +16,12 @@ class RestsTableSeeder extends Seeder
      */
     public function run()
     {
-        $param = [
-            'works_id' => 1,
-            'start_time' => '12:00:00',
-            'end_time' => '13:00:00',
-        ];
-        DB::table('rests')->insert($param);
+        $works = Work::all();
+
+        foreach ($works as $work) {
+            Rest::factory()->create([
+                'works_id' => $work->id,
+            ]);
+        }
     }
 }

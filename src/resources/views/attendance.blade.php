@@ -8,7 +8,7 @@
 <div class="attendance-list">
     <div class="date-navigation">
         <form method="get" action="{{ route('attendance')}}" style="display: inline;">
-            <button type="submit" name="date" value="{{ \Carbon\Carbon::parse($date)->subDay()}->format('Y-m-d') }}">
+            <button type="submit" name="date" value="{{ \Carbon\Carbon::parse($date)->subDay()->format('Y-m-d') }}">
                 &lt;
             </button>
         </form>
@@ -42,7 +42,7 @@
     </table>
 
     <div class="pagination">
-        {{ $attendances->links() }}
+        {{ $works->links() }}
     </div>
 </div>
 @endsection

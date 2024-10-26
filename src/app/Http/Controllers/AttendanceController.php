@@ -117,8 +117,42 @@ class AttendanceController extends Controller
         return redirect('/');
     }
 
-    public function getAttendance()
+    public function getAttendance(Request $request)
     {
-        return view('attendance');
+        $date = $request->input('date', Carbon::now()->format('Y-m-d'));
+
+        $works = Work::with(['user', 'rests'])
+            ->where('work_date', $date)
+            ->paginate(5);
+
+        $attendances = $works->map(function ($work) {
+            $rest_time = 0;
+
+            if ($work->rests) {
+                foreach ($work->rests as $rest) {
+                    $restStart = Carbon::parse($rest->start_time);
+                    $restEnd = $rest->end_time ? Carbon::parse($rest->end_time) : Carbon::now();
+                    $rest_time += $restStart->diffInMinutes($restEnd);
+                }
+            }
+
+            $start_time = Carbon::parse($work->start_time);
+            $end_time = $work->end_time ? Carbon::parse($work->end_time) : Carbon::now();
+            $work_time = $start_time->diffInMinutes($end_time) - $rest_time;
+
+            return [
+                'name' => $work->user->name,
+                'start_time' => $work->start_time,
+                'end_time' => $work->end_time,
+                'rest_time' => $rest_time,
+                'work_time' => $work_time
+            ];
+        });
+
+        return view('attendance', [
+            'attendances' => $attendances,
+            'works' => $works,
+            'date' => $date
+        ]);
     }
 }

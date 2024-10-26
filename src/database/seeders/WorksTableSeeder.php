@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Work;
+use App\Models\User;
 
 class WorksTableSeeder extends Seeder
 {
@@ -14,12 +16,12 @@ class WorksTableSeeder extends Seeder
      */
     public function run()
     {
-        $param = [
-            'users_id' => 1,
-            'work_date' => '2024-8-27',
-            'start_time' => '08:00:00',
-            'end_time' => '17:00:00',
-        ];
-        DB::table('works')->insert($param);
+        $users = User::all();
+
+        foreach ($users as $user) {
+            Work::factory()->create([
+                'users_id' => $user->id,
+            ]);
+        }
     }
 }

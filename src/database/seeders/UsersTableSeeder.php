@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,13 +15,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($cnt = 1; $cnt <= 10; $cnt++) {
-            $param = [
-                'name' => 'テストユーザー' . $cnt,
-                'email' => 'test' . $cnt . '@example.com',
-                'password' => bcrypt('password'),
-            ];
-            DB::table('users')->insert($param);
-        }
+        User::factory()->count(20)->create();
     }
 }

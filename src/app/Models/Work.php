@@ -10,11 +10,19 @@ class Work extends Model
     use HasFactory;
 
     protected $fillable = [
-        'users_id', 'work_date', 'start_time', 'end_time'
+        'users_id',
+        'work_date',
+        'start_time',
+        'end_time'
     ];
 
     public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'users_id');
+    }
+
+    public function rests()
+    {
+        return $this->hasMany(Rest::class, 'works_id');
     }
 }
