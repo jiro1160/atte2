@@ -10,23 +10,18 @@ use Carbon\Carbon;
 class WorkFactory extends Factory
 {
     protected $model = Work::class;
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+
     public function definition()
     {
-        $userId = User::inRandomOrder()->first()->id;
-        $workDate = Carbon::now()->format('Y-m-d');
-        $startTime = Carbon::now()->createFromTime(rand(8, 10));
-        $endTime = (clone $startTime)->addHours(rand(7, 9));
+        $startTime = $this->faker->time('H:i:s');
+        $endTime = Carbon::createFromFormat('H:i:s', $startTime)
+->addHour()->format('H:i:s');
 
         return [
-            'users_id' => $userId,
-            'work_date' => $workDate,
-            'start_time' => $startTime->format('H:i:s'),
-            'end_time' => $endTime->format('H:i:s'),
+            'users_id' => User::inRandomOrder()->first()->id,
+            'work_date' => $this->faker->date(),
+            'start_time' => $startTime,
+            'end_time' => $endTime,
         ];
     }
 }

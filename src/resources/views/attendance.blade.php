@@ -42,7 +42,7 @@
     </table>
 
     <div class="pagination">
-        {{ $works->links() }}
+        {{ $works->links('vendor.pagination.custom') }}
     </div>
 </div>
 @endsection

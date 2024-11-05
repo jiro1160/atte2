@@ -122,30 +122,33 @@ class AttendanceController extends Controller
         $date = $request->input('date', Carbon::now()->format('Y-m-d'));
 
         $works = Work::with(['user', 'rests'])
-            ->where('work_date', $date)
+        ->where('work_date', $date)
             ->paginate(5);
 
         $attendances = $works->map(function ($work) {
-            $rest_time = 0;
+            $totalRestMinutes = 0;
 
             if ($work->rests) {
                 foreach ($work->rests as $rest) {
                     $restStart = Carbon::parse($rest->start_time);
-                    $restEnd = $rest->end_time ? Carbon::parse($rest->end_time) : Carbon::now();
-                    $rest_time += $restStart->diffInMinutes($restEnd);
+                    $restEnd = $rest->end_time ? Carbon::parse($rest->end_time) : Carbon::parse($work->end_time);
+                    $totalRestMinutes += $restStart->diffInMinutes($restEnd);
                 }
             }
 
             $start_time = Carbon::parse($work->start_time);
-            $end_time = $work->end_time ? Carbon::parse($work->end_time) : Carbon::now();
-            $work_time = $start_time->diffInMinutes($end_time) - $rest_time;
+            $end_time = $work->end_time ? Carbon::parse($work->end_time) : Carbon::parse($work->start_time)->addHours(8);
+            $totalWorkMinutes = $start_time->diffInMinutes($end_time);
+
+            $formattedRestTime = gmdate('H:i:s', $totalRestMinutes * 60);
+            $formattedWorkTime = gmdate('H:i:s', ($totalWorkMinutes - $totalRestMinutes) * 60);
 
             return [
                 'name' => $work->user->name,
                 'start_time' => $work->start_time,
-                'end_time' => $work->end_time,
-                'rest_time' => $rest_time,
-                'work_time' => $work_time
+                'end_time' => $work->end_time ?? $end_time->format('H:i'),
+                'rest_time' => $formattedRestTime,
+                'work_time' => $formattedWorkTime
             ];
         });
 

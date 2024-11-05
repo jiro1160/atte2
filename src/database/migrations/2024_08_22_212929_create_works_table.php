@@ -16,10 +16,12 @@ class CreateWorksTable extends Migration
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->foreignId('users_id')->constrained()->cascadeOnDelete()->unique();
-            $table->date('work_date')->unique();
+            $table->date('work_date');
             $table->time('start_time');
             $table->time('end_time')->nullable();
             $table->timestamps();
+
+            $table->unique(['users_id', 'work_date']);
         });
     }
 
