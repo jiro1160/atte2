@@ -56,5 +56,6 @@
 }
 
 .login__button-submit {
+    color: blue;
     text-decoration: none;
 }
