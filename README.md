@@ -2,7 +2,7 @@
 
 ##　環境構築
 **Dockerビルド**
-1. `git clone git@github.com:laravel/atte.git`
+1. `git clone git@github.com:jiro1160/atte.git`
 2. DockerDesktopアプリを立ち上げる
 3. `docker-compose up -d --build`
 
