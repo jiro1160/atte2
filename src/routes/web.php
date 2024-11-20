@@ -11,3 +11,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/rest/start', [AttendanceController::class, 'startRest']);
     Route::post('/rest/end', [AttendanceController::class, 'endRest']);
 });
+
